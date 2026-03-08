@@ -1,115 +1,207 @@
-# Job Outreach Automation - RAY Case Study
+Job Outreach Automation — RAY Case Study
+Overview
 
-## Overview
-Automated pipeline that discovers Executive Assistant and Admin Assistant job postings, validates them based on criteria, generates personalized outreach messages using AI, and saves results to CSV and Google Sheets.
+Job Outreach Automation is a Python-based automation pipeline that discovers Executive Assistant and Administrative Assistant job postings, validates them against defined criteria, generates personalized outreach messages using an AI model, and stores results for operational use.
 
-## Features
-- ✅ Web scraping from Remotive job board (API-based, reliable)
-- ✅ Automatic job validation (remote, English, role relevance)
-- ✅ AI-powered personalized outreach messages (Cloudflare Llama 3.1 8B)
-- ✅ CSV export with all job details
-- ✅ Google Sheets integration for sales team dashboard
-- ✅ Daily automation scheduling
-- ✅ Comprehensive error handling
+The system was designed to streamline outbound job outreach by reducing manual discovery and message drafting. The pipeline automatically collects relevant job opportunities and generates tailored outreach messages ready for immediate use.
 
-## Installation
+Key Features
 
-### 1. Install Dependencies
-```bash
+Automated job discovery using the Remotive job board API
+
+Job validation based on role relevance, language, and remote criteria
+
+AI-generated personalized outreach messages using Cloudflare Llama 3.1 8B
+
+Structured CSV export for reporting and data tracking
+
+Google Sheets integration for collaborative workflows
+
+Scheduled automation for daily execution
+
+Robust error handling and retry logic
+
+System Architecture
+
+The automation pipeline follows a sequential processing flow:
+
+scrape_jobs() 
+      ↓
+validate_job()
+      ↓
+generate_outreach_message()
+      ↓
+save_to_csv()
+      ↓
+save_to_google_sheets()
+
+Each stage performs a specific responsibility to ensure data quality and maintain pipeline reliability.
+
+Project Structure
+RAY-AI-SCRIPT/
+│
+├── job_outreach_automation.py
+├── README.md
+├── job_outreach_results.csv
+├── credentials.json
+├── .env
+└── requirements.txt
+File Descriptions
+
+job_outreach_automation.py
+Primary automation script containing scraping, validation, AI message generation, and data export logic.
+
+.env
+Environment variables used for API credentials and secure configuration.
+
+credentials.json
+OAuth configuration used for Google Sheets authentication.
+
+job_outreach_results.csv
+Structured export of discovered jobs and generated outreach messages.
+
+Installation
+1. Install Dependencies
+
+Navigate to the project directory and install dependencies.
+
 cd RAY-AI-SCRIPT
 pip install requests beautifulsoup4 gspread google-auth google-auth-oauthlib google-auth-httplib2 schedule python-dotenv
-```
 
-Or use the virtual environment:
-```bash
+Alternatively install using a virtual environment.
+
 ./venv/bin/pip install -r requirements.txt
-```
+Configuration
+Cloudflare AI Setup
 
-### 2. Configure Cloudflare AI
-Edit `.env` file:
-```
-CLOUDFLARE_ACCOUNT_ID=9f3fe533797c89e316271830e6bcb1f9
-CLOUDFLARE_API_TOKEN=your-token-here
-```
+Create an API token and configure environment variables.
 
-Get your token at: https://dash.cloudflare.com/profile/api-tokens
+.env
 
-### 3. Configure Google Sheets
-1. Go to https://console.cloud.google.com/
-2. Enable Google Sheets API and Google Drive API
-3. Create OAuth credentials (Desktop app)
-4. Download as `credentials.json`
-5. Add yourself as test user in OAuth consent screen
-6. Create a Google Sheet named "Job Outreach Tracker"
+CLOUDFLARE_ACCOUNT_ID=your-account-id
+CLOUDFLARE_API_TOKEN=your-api-token
 
-## Usage
+API tokens can be generated from the Cloudflare dashboard.
 
-### Run Once
-```bash
+Google Sheets Setup
+
+Open the Google Cloud Console
+
+Enable:
+
+Google Sheets API
+
+Google Drive API
+
+Create OAuth credentials (Desktop Application)
+
+Download the credentials file as credentials.json
+
+Add your email as a test user in the OAuth consent screen
+
+Create a Google Sheet titled Job Outreach Tracker
+
+Running the Automation
+Run Once
+
+Execute the script manually.
+
 ./venv/bin/python job_outreach_automation.py
-```
+Enable Scheduled Automation
 
-### Enable Daily Automation
-Edit `job_outreach_automation.py` and uncomment:
-```python
-# start_scheduler()
-```
+Inside the script, enable the scheduler.
 
-## Configuration
+start_scheduler()
 
-### Change LLM Prompt
-Edit `OUTREACH_PROMPT_TEMPLATE` at the top of the script to test different tones.
+This allows the pipeline to run automatically at scheduled intervals.
 
-### Change Job Source
-Edit `JOB_BOARD_URL` to use different job boards or categories.
+Customization
+Adjust AI Outreach Tone
 
-### Adjust Validation Criteria
-Modify keyword lists:
-- `REMOTE_KEYWORDS`
-- `ENGLISH_KEYWORDS`
-- `ROLE_KEYWORDS`
+Edit the prompt template used by the AI model.
 
-## Output
+OUTREACH_PROMPT_TEMPLATE
 
-### CSV File
-`job_outreach_results.csv` contains:
-- Job Posting URL
-- Job Title
-- Company Name
-- Location
-- Job Description
-- LLM Generated Outreach Message
+This allows customization of messaging tone and structure.
 
-### Google Sheet
-Same columns as CSV, accessible by sales team for quick application.
+Modify Job Validation Rules
 
-## Troubleshooting
+Job filtering logic can be adjusted by editing keyword lists:
 
-### Google Sheets OAuth Error
-Add your email as test user:
-1. Go to https://console.cloud.google.com/apis/credentials/consent
-2. Add test users
-3. Run script again
+REMOTE_KEYWORDS
 
-### No Jobs Found
-- Check if job board URL is accessible
-- Verify internet connection
-- Try different job category
+ENGLISH_KEYWORDS
 
-### Cloudflare API Error
-- Verify API token in `.env`
-- Check account ID is correct
-- Ensure Workers AI is enabled
+ROLE_KEYWORDS
 
-## Architecture
+These filters ensure only relevant jobs are processed.
 
-```
-scrape_jobs() → validate_job() → generate_outreach_message() → save_to_csv() + save_to_google_sheets()
-```
+Output
+CSV Export
 
-## Files
-- `job_outreach_automation.py` - Main script
-- `.env` - API credentials
-- `credentials.json` - Google OAuth config
-- `job_outreach_results.csv` - Output data
-- `README.md` - This file
+job_outreach_results.csv includes:
+
+Job Posting URL
+
+Job Title
+
+Company Name
+
+Location
+
+Job Description
+
+AI-generated Outreach Message
+
+Google Sheets Dashboard
+
+The same data is pushed to Google Sheets, allowing teams to:
+
+review opportunities
+
+track outreach
+
+collaborate on job applications
+
+Troubleshooting
+Google Sheets OAuth Errors
+
+Ensure your email is added as a test user in the OAuth consent configuration.
+
+No Jobs Found
+
+Possible causes:
+
+Job board API unavailable
+
+Network connectivity issues
+
+Job category mismatch
+
+Cloudflare API Errors
+
+Verify the following:
+
+API token validity
+
+Correct account ID
+
+Workers AI access enabled
+
+Technologies Used
+
+Python
+
+REST APIs
+
+Cloudflare Workers AI
+
+Google Sheets API
+
+Automation scheduling
+
+Environment-based configuration
+
+Use Case
+
+This automation reduces manual job discovery and message drafting, enabling faster and more scalable outreach workflows for job applications or sales pipelines.
