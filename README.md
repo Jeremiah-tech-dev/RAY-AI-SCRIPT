@@ -1,11 +1,11 @@
-*🚀 Job Outreach Automation — RAY Case Study*
+#🚀 Job Outreach Automation — RAY Case Study
 🔎 Overview
 
 Job Outreach Automation is a Python-based automation pipeline that discovers Executive Assistant and Administrative Assistant job postings, validates them against defined criteria, generates personalized outreach messages using an AI model, and stores results for operational use.
 
 The system reduces manual job discovery and message drafting by automatically collecting relevant job opportunities and generating tailored outreach messages ready for immediate submission.
 
-⚡ Key Features
+#⚡ Key Features
 
 ✅ Automated job discovery using the Remotive job board API
 
@@ -21,7 +21,7 @@ The system reduces manual job discovery and message drafting by automatically co
 
 ✅ Robust error handling and retry logic
 
-🏗 System Architecture
+#🏗 System Architecture
 
 The automation pipeline follows a sequential processing flow:
 
@@ -37,7 +37,7 @@ save_to_google_sheets()
 
 Each stage performs a dedicated responsibility to maintain data quality, reliability, and automation efficiency.
 
-📁 Project Structure
+#📁 Project Structure
 RAY-AI-SCRIPT/
 │
 ├── job_outreach_automation.py
@@ -60,7 +60,7 @@ Google OAuth configuration for Google Sheets access.
 job_outreach_results.csv
 Generated dataset containing discovered jobs and AI-generated outreach messages.
 
-⚙ Installation
+#⚙ Installation
 1️⃣ Install Dependencies
 
 Navigate to the project directory and install dependencies:
@@ -71,7 +71,7 @@ pip install requests beautifulsoup4 gspread google-auth google-auth-oauthlib goo
 Or install using the virtual environment:
 
 ./venv/bin/pip install -r requirements.txt
-🔐 Configuration
+#🔐 Configuration
 Cloudflare AI Setup
 
 Create an API token and configure environment variables.
@@ -101,7 +101,7 @@ Add your email as a test user in the OAuth consent screen
 
 Create a Google Sheet named Job Outreach Tracker
 
-▶ Running the Automation
+#▶ Running the Automation
 Run Once
 
 Execute the script manually:
@@ -115,7 +115,7 @@ start_scheduler()
 
 This allows the pipeline to run automatically on a daily schedule.
 
-🛠 Customization
+#🛠 Customization
 Adjust AI Outreach Tone
 
 Modify the AI prompt template:
@@ -136,7 +136,7 @@ ROLE_KEYWORDS
 
 These filters ensure only relevant job postings are processed.
 
-📊 Output
+#📊 Output
 CSV Export
 
 job_outreach_results.csv includes:
@@ -163,7 +163,7 @@ Track outreach progress
 
 Collaborate on job applications
 
-🧰 Troubleshooting
+#🧰 Troubleshooting
 Google Sheets OAuth Error
 
 Add your email as a test user:
@@ -194,7 +194,7 @@ Correct account ID
 
 Workers AI access enabled
 
-🧑‍💻 Technologies Used
+#🧑‍💻 Technologies Used
 
 Python
 
@@ -208,6 +208,6 @@ Automation scheduling
 
 Environment-based configuration
 
-🎯 Use Case
+#🎯 Use Case
 
 This automation pipeline reduces manual job discovery and message drafting, enabling faster, scalable outreach workflows for job applications and opportunity tracking.
